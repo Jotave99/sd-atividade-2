@@ -1,0 +1,57 @@
+<!-- comentarios.njk -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comentários</title>
+</head>
+<body>
+    <div id="comments-container">
+        {% for comment in comments %}
+            <div class="comment">
+                <p>{{ comment.author }} diz: {{ comment.text }}</p>
+            </div>
+        {% endfor %}
+    </div>
+
+    <form id="comment-form">
+        <label for="author">Autor:</label>
+        <input type="text" id="author" name="author" required>
+
+        <label for="text">Comentário:</label>
+        <textarea id="text" name="text" required></textarea>
+
+        <button type="button" onclick="addComment()">Adicionar Comentário</button>
+    </form>
+
+    <script>
+        function addComment() {
+            var authorInput = document.getElementById('author');
+            var textInput = document.getElementById('text');
+
+            var author = authorInput.value;
+            var text = textInput.value;
+
+            if (author && text) {
+                var commentContainer = document.getElementById('comments-container');
+
+                // Adicione o novo comentário à lista
+                var newComment = document.createElement('div');
+                newComment.className = 'comment';
+                newComment.innerHTML = '<p>' + author + ' diz: ' + text + '</p>';
+
+                commentContainer.appendChild(newComment);
+
+                // Limpe os campos do formulário
+                authorInput.value = '';
+                textInput.value = '';
+            } else {
+                alert('Por favor, preencha todos os campos.');
+            }
+        }
+    </script>
+</body>
+</html>

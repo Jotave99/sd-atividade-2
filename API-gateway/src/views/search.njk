@@ -1,0 +1,21 @@
+{% extends "layout.njk" %}
+
+{% set title = "BooksAPI" %}
+{% set header = "BooksAPI" %}
+
+{% block content %}
+    <input type="text" placeholder="insira o nome do livro">
+
+    {% if telaConfig.livros %}
+        <div class="boxLivros">
+        {% for livro in telaConfig.livros %}
+        <div class="boxConteudo">
+          <img src="{{ livro.imagen }}" alt="">
+          <p class="tituloLivro">{{ livro.tituloLivro }}</p>
+        </div>
+        {% endfor %}
+        </div>
+    {% else %}
+        <p>Nenhum livro disponível.</p>
+    {% endif %}
+{% endblock %}

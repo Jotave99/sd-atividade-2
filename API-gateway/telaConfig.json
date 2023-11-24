@@ -1,0 +1,19 @@
+{
+    "titulo": "pagina nunjuks",
+    "Frase": "BooksAPI",
+    "livros": [
+      {
+        "imagen": "./img/livroharry.jpeg",
+        "tituloLivro": "Harry Potter e o magico de Oz"
+      },
+      {
+        "imagen": "./img/livroharry.jpeg",
+        "tituloLivro": "O Senhor dos Anéis"
+      },
+      {
+        "imagen": "./img/livroharry.jpeg",
+        "tituloLivro": "Harry Potter e a Criança Amaldiçoada"
+      }
+    ]
+}
+  

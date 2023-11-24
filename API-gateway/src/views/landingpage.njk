@@ -1,0 +1,25 @@
+{% extends "layout.njk" %}
+
+{% set title = "BooksAPI" %}
+
+{% block content %}
+    <script src="https://accounts.google.com/gsi/client" async></script>
+
+    <script>
+        function handleCredentialResponse(response) {
+    
+        }
+        window.onload = function () {
+            google.accounts.id.initialize({
+                client_id: "1026815510927-1kjc1le4itbulrpukr1ar85u5gtlgaqb.apps.googleusercontent.com",
+                callback: handleCredentialResponse
+            });
+            google.accounts.id.renderButton(
+            document.getElementById("buttonDiv"),
+            { theme: "outline", size: "large" }  // customization attributes
+        );
+        google.accounts.id.prompt(); // also display the One Tap dialog
+      }
+    </script>
+    <div id="buttonDiv"></div>
+{% endblock %}
