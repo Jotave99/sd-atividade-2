@@ -13,6 +13,34 @@ body{
     gap: 100px;
 }
 
+.container{
+    display: flex;
+    align-items: center;
+}
+
+
+.left-section {
+    margin-left: 100px;
+    margin-bottom: 150px;
+  }
+
+  .right-section {
+    margin-left: 50px;
+  }
+
+  .comment-section {
+    margin-top: 30px;
+    
+  }
+
+  textarea {
+    border: 1px solid #EBEBEB;
+    background: #F3F3F3;
+    color: #676767;
+    width: 500px;
+    height: 100px;
+  }
+
 .fraseAPI{
     color: #000;
     text-align: center;
@@ -46,6 +74,20 @@ input::placeholder{
     font-weight: 600;
     line-height: normal;
     padding: 10px;
+}
+
+button{
+    width: 500px;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid #EBEBEB;
+    width: 101px;
+    height: 29px;
+    top: 323px;
+    left: 465.5px;
+    background-color: #5055D4;
+    color: #F3F3F3;
+
 }
 
 .tituloLivro{

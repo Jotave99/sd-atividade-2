@@ -1,57 +1,70 @@
-<!-- comentarios.njk -->
+{% extends "layout.njk" %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comentários</title>
-</head>
-<body>
-    <div id="comments-container">
-        {% for comment in comments %}
-            <div class="comment">
-                <p>{{ comment.author }} diz: {{ comment.text }}</p>
+{% set title = "BooksAPI" %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="left-section">
+            <a href="/">< voltar a busca</a>
+
+            {% if telaConfig.livros %}
+                <div class="boxLivros">
+                {% for livro in telaConfig.livros %}
+                <div class="boxConteudo">
+                <img src="{{ livro.imagen }}" alt="">
+                <p class="tituloLivro">{{ livro.tituloLivro }}</p>
+                </div>
+                {% endfor %}
+                </div>
+            {% else %}
+                <p>Nenhum livro disponível.</p>
+            {% endif %}
+        </div>
+        <div class="right-section">
+            <p>Sinopse do Livro:<br/> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor bibendum neque, a gravida elit facilisis nec.</p>
+            <div class="comment-section">
+                <form id="comment-form">
+                    <label for="text">Comentário:</label>
+                    <textarea id="text" name="text" required></textarea>
+                    <button type="button" onclick="addComment()">Comentar</button>
+                </form>
             </div>
-        {% endfor %}
-    </div>
+        </div>
 
-    <form id="comment-form">
-        <label for="author">Autor:</label>
-        <input type="text" id="author" name="author" required>
+        <div id="comments-container">
+            {% for comment in comments %}
+                <div class="comment">
+                    <p>{{ comment.author }} diz: {{ comment.text }}</p>
+                </div>
+            {% endfor %}
+        </div>
 
-        <label for="text">Comentário:</label>
-        <textarea id="text" name="text" required></textarea>
+        <script>
+            function addComment() {
+                var authorInput = document.getElementById('author');
+                var textInput = document.getElementById('text');
 
-        <button type="button" onclick="addComment()">Adicionar Comentário</button>
-    </form>
+                var author = authorInput.value;
+                var text = textInput.value;
 
-    <script>
-        function addComment() {
-            var authorInput = document.getElementById('author');
-            var textInput = document.getElementById('text');
+                if (author && text) {
+                    var commentContainer = document.getElementById('comments-container');
 
-            var author = authorInput.value;
-            var text = textInput.value;
+                    // Adicione o novo comentário à lista
+                    var newComment = document.createElement('div');
+                    newComment.className = 'comment';
+                    newComment.innerHTML = '<p>' + author + ' diz: ' + text + '</p>';
 
-            if (author && text) {
-                var commentContainer = document.getElementById('comments-container');
+                    commentContainer.appendChild(newComment);
 
-                // Adicione o novo comentário à lista
-                var newComment = document.createElement('div');
-                newComment.className = 'comment';
-                newComment.innerHTML = '<p>' + author + ' diz: ' + text + '</p>';
-
-                commentContainer.appendChild(newComment);
-
-                // Limpe os campos do formulário
-                authorInput.value = '';
-                textInput.value = '';
-            } else {
-                alert('Por favor, preencha todos os campos.');
+                    // Limpe os campos do formulário
+                    authorInput.value = '';
+                    textInput.value = '';
+                } else {
+                    alert('Por favor, preencha todos os campos.');
+                }
             }
-        }
-    </script>
-</body>
-</html>
+        </script>
+    </div>
+{% endblock %}
