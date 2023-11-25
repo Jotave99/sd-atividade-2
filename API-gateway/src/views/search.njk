@@ -4,18 +4,59 @@
 {% set header = "BooksAPI" %}
 
 {% block content %}
-    <input type="text" placeholder="insira o nome do livro">
+    <input id="livroInput" class="inputLivros" type="text" placeholder="insira o nome do livro">
 
-    {% if telaConfig.livros %}
-        <div class="boxLivros">
-        {% for livro in telaConfig.livros %}
-        <div class="boxConteudo">
-          <img src="{{ livro.imagen }}" alt="">
-          <p class="tituloLivro">{{ livro.tituloLivro }}</p>
-        </div>
-        {% endfor %}
-        </div>
-    {% else %}
-        <p>Nenhum livro disponível.</p>
-    {% endif %}
+    <div class="boxLivros" id="livrosContainer">
+
+    </div>
+
+    <script>
+        const inputLivro = document.getElementById('livroInput');
+        const livrosContainer = document.getElementById('livrosContainer');
+
+        inputLivro.addEventListener('input', async (event) => {
+            const searchTerm = event.target.value;
+
+            try {
+                const response = await fetch(`/search`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                    },
+                    body: JSON.stringify({ pesquisa: searchTerm }),
+                });
+
+                const data = await response.json();
+
+                livrosContainer.innerHTML = '';
+
+                if (data.books && Array.isArray(data.books)) {
+
+                    data.books.forEach(livro => {
+                        const livroDiv = document.createElement('div');
+                        livroDiv.classList.add('boxConteudo');
+
+                        const img = document.createElement('img');
+                        img.src = livro.volumeInfo.imageLinks?.thumbnail || ''; 
+                        img.alt = '';
+
+                        const p = document.createElement('p');
+                        p.classList.add('tituloLivro');
+                        p.textContent = livro.volumeInfo.title;
+
+                        livroDiv.appendChild(img);
+                        livroDiv.appendChild(p);
+
+                        livrosContainer.appendChild(livroDiv);
+                    });
+                } else {
+                    console.error('A resposta da API não está no formato esperado:', data);
+                }
+            } catch (error) {
+                console.error('Erro ao buscar livros:', error);
+            }
+        });
+
+    </script>
 {% endblock %}

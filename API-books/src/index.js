@@ -2,11 +2,14 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import cors from "cors";
+import axios from "axios";
 import {router} from "./router.js";
 import { config } from 'dotenv';
 
 // Configurando dotenv
 config();
+
+const apiKey ="AIzaSyCMese8tmSxZX1RwqIAq4MpgNEzI-fHDFI";
 
 const app = express();
 
@@ -23,6 +26,19 @@ app.use(express.json());
 app.use(cors({
     credentials: true
 }));
+
+app.post("/api/livros", async (req, res) => { 
+    try {
+        const {pesquisa} = req.body;
+        const numeroDeResultados = 10;
+        const response = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${pesquisa}&${apiKey}&maxResults=${numeroDeResultados}`);
+        const books = response.data.items;
+        res.json({ books });        
+    } catch (error) {
+        res.send(error.message);
+    }
+})
+
 app.use(router);
 
 app.listen(3000, console.log("Api rodando na porta 3000"));

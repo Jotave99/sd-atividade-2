@@ -2,10 +2,10 @@ import express from "express";
 import nunjucks from "nunjucks";
 import * as middleware from "./src/middleware/authorization.js";
 import cookieParser from 'cookie-parser';
-import bodyParser from "body-parser";
 import session from 'express-session';
 import authRouter from "./src/auth/authRouter.js";
 import { config } from "dotenv";
+import axios from "axios";
 import fs  from "fs";
 config();
 
@@ -16,8 +16,8 @@ app.use(express.static('public'));
 app.set('view engine', 'njk');
 app.use(express.urlencoded({ extended: false}));
 app.use(cookieParser());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(session({
     secret: process.env.SECRET,
     resave: false,
@@ -37,12 +37,21 @@ app.get("/", (req, res) => {
     res.render("landingpage.njk");
 })
 
-app.get("/search", middleware.authenticate, (req, res) => {
-    const telaConfigData = fs.readFileSync("./telaConfig.json", "utf8");
+app.get("/search", middleware.authenticate, async (req, res) => {
 
-    const telaConfig = JSON.parse(telaConfigData);
+    res.render("search.njk");
+});
 
-    res.render("search.njk", {telaConfig});
+app.post("/search",middleware.authenticate, async (req,res)=>{
+
+  console.log(req.body);
+  const {pesquisa} = req.body;
+
+  const livros = await axios.post("http://localhost:3000/api/livros",{pesquisa});
+
+
+  res.json(livros.data);
+
 });
 
 let comments = [];
