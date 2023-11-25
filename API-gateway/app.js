@@ -4,13 +4,14 @@ import * as middleware from "./src/middleware/authorization.js";
 import cookieParser from 'cookie-parser';
 import bodyParser from "body-parser";
 import session from 'express-session';
+import authRouter from "./src/auth/authRouter.js";
 import { config } from "dotenv";
 import fs  from "fs";
 config();
 
 const app = express();
 
-//app.use(middleware.locals);
+
 app.use(express.static('public'));
 app.set('view engine', 'njk');
 app.use(express.urlencoded({ extended: false}));
@@ -29,12 +30,14 @@ nunjucks.configure('src/views', {
     express: app
 });
 
+app.use(middleware.locals);
+app.use(authRouter);
+
 app.get("/", (req, res) => {
     res.render("landingpage.njk");
 })
 
 app.get("/search", middleware.authenticate, (req, res) => {
-
     const telaConfigData = fs.readFileSync("./telaConfig.json", "utf8");
 
     const telaConfig = JSON.parse(telaConfigData);
