@@ -62,7 +62,13 @@ app.post('/api/comments', (req, res) => {
 });
 
 app.get('/comments', (req, res) => {
-  res.render('comentarios.njk', { comments });
+
+  const telaConfigData = fs.readFileSync("./telaConfig.json", "utf8");
+
+    const telaConfig = JSON.parse(telaConfigData);
+    
+    for(comments of telaConfig.livros[0].comentarios){console.log(comments)};
+  res.render('comentarios.njk', { telaConfig });
 });
 
 app.listen(8000, () => {

@@ -4,7 +4,13 @@
     "livros": [
       {
         "imagen": "./img/livroharry.jpeg",
-        "tituloLivro": "Harry Potter e o magico de Oz"
+        "tituloLivro": "Harry Potter e o magico de Oz",
+        "comentarios": [{
+          "comentario": "03/03/2022. JOHNNY DOE. Esse é o melhor livro da trilogia!"
+        }, {
+          "comentario": "03/03/2022. JOHN DOE. Esse é o melhor livro da trilogia!"
+        }]
+
       },
       {
         "imagen": "./img/livroharry.jpeg",

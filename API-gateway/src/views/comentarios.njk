@@ -10,16 +10,15 @@
 
             {% if telaConfig.livros %}
                 <div class="boxLivros">
-                {% for livro in telaConfig.livros %}
-                <div class="boxConteudo">
-                <img src="{{ livro.imagen }}" alt="">
-                <p class="tituloLivro">{{ livro.tituloLivro }}</p>
-                </div>
-                {% endfor %}
+                    <div class="boxConteudo">
+                        <img src="{{ telaConfig.livros[0].imagen }}" alt="">
+                        <p class="tituloLivro">{{ telaConfig.livros[0].tituloLivro }}</p>
+                    </div>
                 </div>
             {% else %}
                 <p>Nenhum livro disponível.</p>
             {% endif %}
+
         </div>
         <div class="right-section">
             <p>Sinopse do Livro:<br/> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor bibendum neque, a gravida elit facilisis nec.</p>
@@ -33,9 +32,9 @@
         </div>
 
         <div id="comments-container">
-            {% for comment in comments %}
+            {% for comment in telaConfig.livros[0].comentarios %}
                 <div class="comment">
-                    <p>{{ comment.author }} diz: {{ comment.text }}</p>
+                    <p>{{ comment.comentario}}</p>
                 </div>
             {% endfor %}
         </div>
