@@ -64,7 +64,7 @@ app.post("/api/addcomment", async (req, res) => {
   res.redirect(`/comments/${livroid}`);
 })
 
-app.get('/comments/:id', async (req, res) => {
+app.get('/comments/:id', middleware.authenticate, async (req, res) => {
   const {id} = req.params;
 
   const book = await axios.get(`http://localhost:3000/api/buscalivro/:${id}`);

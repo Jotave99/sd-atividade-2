@@ -12,7 +12,7 @@ export const locals = (req, res, next) => {
 export const authenticate = async(req, res, next) => {
     const {access_token} = req.cookies;
 
-    if (access_token){
+    if (access_token && req.session.user){
         try {
             const [, token] = access_token.split(" ");
 
