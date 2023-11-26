@@ -6,7 +6,7 @@ import session from 'express-session';
 import authRouter from "./src/auth/authRouter.js";
 import { config } from "dotenv";
 import axios from "axios";
-import fs  from "fs";
+import router from "./router.js";
 config();
 
 const app = express();
@@ -31,57 +31,38 @@ nunjucks.configure('src/views', {
 });
 
 app.use(middleware.locals);
-app.use(authRouter);
 
 app.get("/", (req, res) => {
     res.render("landingpage.njk");
 })
 
 app.get("/search", middleware.authenticate, async (req, res) => {
-
     res.render("search.njk");
 });
 
 app.post("/search",middleware.authenticate, async (req,res)=>{
-
-  console.log(req.body);
   const {pesquisa} = req.body;
 
-  const livros = await axios.post("http://localhost:3000/api/livros",{pesquisa});
-
+  const livros = await axios.post("http://localhost:3000/api/livros", {pesquisa});
 
   res.json(livros.data);
-
 });
 
-let comments = [];
+app.post("/api/addcomment", async (req, res) => {
+  const {comment, livroid} = req.body;
 
-app.post("/api/comment/add", async (req, res) => {
-  const {livro} = req.body;
+  const user = req.session.user;
 
-  const parsedData = JSON.parse(livro);
-
-  const axiosResponse = await axios.post("http://localhost:3000/api/addbook", {parsedData});
-
-  res.redirect(`/comments/${axiosResponse.data.livroId}`);
-})
-
-app.get('/api/comments', (req, res) => {
-  res.json(comments);
-});
-
-app.post('/api/comments', (req, res) => {
-  const { author, text } = req.body;
-
-  if (author && text) {
-    const newComment = { author, text };
-    comments.push(newComment);
-
-    res.redirect('/comments');
-  } else {
-    res.status(400).json({ error: 'Author and text are required.' });
+  const newComment = {  
+    livroId: livroid,
+    usuario: user,
+    texto: comment,
   }
-});
+
+  const axiosResponse = await axios.post("http://localhost:3000/api/addcomment", {newComment});
+
+  res.redirect(`/comments/${livroid}`);
+})
 
 app.get('/comments/:id', async (req, res) => {
   const {id} = req.params;
@@ -90,8 +71,10 @@ app.get('/comments/:id', async (req, res) => {
 
   const comments = await axios.get(`http://localhost:3000/api/getcomments/:${id}`);
 
-  res.render('comentarios.njk', { livros: book.data, comments:  comments});
+  res.render('comentarios.njk', { livro: book.data, comments:  comments.data});
 });
+
+app.use("/api", router);
 
 app.listen(8000, () => {
     console.log("Server is running on port 8000");

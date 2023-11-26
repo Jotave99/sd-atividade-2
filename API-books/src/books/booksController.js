@@ -34,6 +34,14 @@ export const getLivro = async (req, res)=>{
     }
 };
 
+export const addcomment = async (req, res) => {
+    const {newComment} = req.body;
+
+    const axiosResponse = await axios.post("http://localhost:4000/api/comentario", {newComment});
+
+    res.json(axiosResponse.data);
+}
+
 export const getComments = async (req, res)=>{
     try {
         const { id } = req.params;

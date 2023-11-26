@@ -8,11 +8,11 @@ const Comentario = database.define('Comentario', {
     autoIncrement: true,
   },
   livroId: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     allowNull: false,
   },
   usuario: {
-    type: DataTypes.STRING,
+    type: DataTypes.JSON,
     allowNull: false,
   },
   texto: {

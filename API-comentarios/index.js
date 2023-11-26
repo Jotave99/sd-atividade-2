@@ -30,13 +30,13 @@ app.get("/api/getlivro/:id",async (req,res)=>{
 });
 
 app.post("/api/comentario",async (req,res)=>{
-
-    const {livroId,usuario, texto } = req.body; 
+    console.log(req.body.newComment);
+    const { newComment } = req.body; 
 
     const dataAtual = new Date();
     // const dataFormatada = `${dataAtual.getDate()}/${dataAtual.getMonth() + 1}/${dataAtual.getFullYear()}`;
 
-    const comentario = await Comentario.create({livroId,usuario,texto,data: dataAtual});
+    const comentario = await Comentario.create({livroId: newComment.livroId, usuario: newComment.usuario, texto: newComment.texto, data: dataAtual});
 
     res.json(comentario);
 });
