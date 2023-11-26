@@ -83,14 +83,14 @@ app.post('/api/comments', (req, res) => {
   }
 });
 
-app.get('/comments/:id', (req, res) => {
+app.get('/comments/:id', async (req, res) => {
+  const {id} = req.params;
 
-  const telaConfigData = fs.readFileSync("./telaConfig.json", "utf8");
+  const book = await axios.get(`http://localhost:3000/api/buscalivro/:${id}`);
 
-  const telaConfig = JSON.parse(telaConfigData);
-    
-  for(comments of telaConfig.livros[0].comentarios){console.log(comments)};
-  res.render('comentarios.njk', { telaConfig });
+  const comments = await axios.get(`http://localhost:3000/api/getcomments/:${id}`);
+
+  res.render('comentarios.njk', { livros: book.data, comments:  comments});
 });
 
 app.listen(8000, () => {

@@ -20,6 +20,15 @@ app.post("/api/addbook", async (req, res) => {
     //res.json(book);
 })
 
+app.get("/api/getlivro/:id",async (req,res)=>{
+
+    const {id} = req.params;
+
+    const book = await Book.findOne({livroId: id});
+      
+    res.json(book);
+});
+
 app.post("/api/comentario",async (req,res)=>{
 
     const {livroId,usuario, texto } = req.body; 
@@ -32,15 +41,13 @@ app.post("/api/comentario",async (req,res)=>{
     res.json(comentario);
 });
 
-app.get("/api/allcomentario",async (req,res)=>{
+app.get("/api/getcomments/:id",async (req,res)=>{
 
-    const todosComentarios = await Comentario.findAll({
-        where: {
-          livroId: req.body.id
-        }
-      });
+    const {id} = req.params;
+
+    const comments = await Comentario.findAll({livroId: id});
       
-    res.json(todosComentarios);
+    res.json(comments);
 });
 
 app.patch("/api/editarcomentario", async (req,res)=>{

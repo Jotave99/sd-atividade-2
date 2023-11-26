@@ -24,10 +24,23 @@ export const search = async (req, res) => {
 
 export const getLivro = async (req, res)=>{
     try {
-        const { idLivro } = req.params;
-        const response = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${idLivro}&key=${apiKey}`);
-        const livro = response.data.items[0].volumeInfo;
-        res.json({livro});
+        const { id } = req.params;
+
+        const response = await axios.get(`http://localhost:4000/api/getlivro/:${id}`);
+
+        res.json(response.data);
+    } catch (err) {
+        res.send(err);
+    }
+};
+
+export const getComments = async (req, res)=>{
+    try {
+        const { id } = req.params;
+
+        const response = await axios.get(`http://localhost:4000/api/getcomments/:${id}`);
+
+        res.json(response.data);
     } catch (err) {
         res.send(err);
     }
