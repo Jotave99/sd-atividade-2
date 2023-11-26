@@ -39,6 +39,17 @@ app.post("/api/livros", async (req, res) => {
     }
 })
 
+app.get("/api/buscaLivro/:id",async (req, res)=>{
+    try {
+        const { idLivro } = req.params;
+        const response = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${idLivro}&key=${apiKey}`);
+        const livro = response.data.items[0].volumeInfo;
+        res.json({livro});
+    } catch (err) {
+        res.send(err);
+    }
+});
+
 app.use(router);
 
 app.listen(3000, console.log("Api rodando na porta 3000"));
