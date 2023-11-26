@@ -41,12 +41,13 @@
                         img.src = livro.volumeInfo.imageLinks?.thumbnail || ''; 
                         img.alt = '';
 
-                        const p = document.createElement('p');
-                        p.classList.add('tituloLivro');
-                        p.textContent = livro.volumeInfo.title;
+                        const a = document.createElement('a');
+                        a.classList.add('tituloLivro');
+                        a.textContent = livro.volumeInfo.title;
+                        a.href = "/"
 
                         livroDiv.appendChild(img);
-                        livroDiv.appendChild(p);
+                        livroDiv.appendChild(a);
 
                         livrosContainer.appendChild(livroDiv);
                     });
