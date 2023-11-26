@@ -19,6 +19,10 @@ const Comentario = database.define('Comentario', {
     type: DataTypes.TEXT,
     allowNull: false,
   },
+  data:{
+    type: DataTypes.DATE,
+    allowNull: false,
+  }
 });
 
 Comentario.sync();

@@ -8,8 +8,10 @@ app.post("/api/comentario",async (req,res)=>{
 
     const {livroId,usuario, texto } = req.body; 
 
+    const dataAtual = new Date();
+    // const dataFormatada = `${dataAtual.getDate()}/${dataAtual.getMonth() + 1}/${dataAtual.getFullYear()}`;
 
-    const comentario = await Comentario.create({livroId,usuario,texto});
+    const comentario = await Comentario.create({livroId,usuario,texto,data: dataAtual});
 
     res.json(comentario);
 });
