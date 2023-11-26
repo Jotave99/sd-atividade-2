@@ -61,9 +61,9 @@ app.post("/api/comment/add", async (req, res) => {
 
   const parsedData = JSON.parse(livro);
 
-  const axiosResponse = await axios.post("http://localhost:3000/addbook", {parsedData});
+  const axiosResponse = await axios.post("http://localhost:3000/api/addbook", {parsedData});
 
-  res.redirect(`/comments/${axiosResponse.livro.id}`);
+  res.redirect(`/comments/${axiosResponse.data.livroId}`);
 })
 
 app.get('/api/comments', (req, res) => {

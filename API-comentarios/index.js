@@ -1,16 +1,23 @@
-import expres from "express";
+import express from "express";
 import Comentario from "./comentario/comentario.js";
 import Book from "./book/book.js";
 
-const app = expres();
-app.use(expres.json());
+const app = express();
+app.use(express.json());
 
 app.post("/api/addbook", async (req, res) => {
-    const {livro} = req.body;
+    const {parsedData} = req.body;
 
-    const book = await Book.create({livroId: livro.id, volumeInfo: livro.volumeInfo})
+    const search = await Book.findOne({livroId: parsedData.id});
 
-    res.json(book);
+    if(!search){
+        const book = await Book.create({livroId: parsedData.id, volumeInfo: parsedData.volumeInfo})
+
+        res.json(book)
+    } else {
+        res.json(search);
+    }
+    //res.json(book);
 })
 
 app.post("/api/comentario",async (req,res)=>{
