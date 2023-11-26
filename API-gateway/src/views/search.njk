@@ -34,6 +34,7 @@
                 if (data.books && Array.isArray(data.books)) {
 
                     data.books.forEach(livro => {
+                        console.log(livro);
                         const livroDiv = document.createElement('div');
                         livroDiv.classList.add('boxConteudo');
 
@@ -41,13 +42,25 @@
                         img.src = livro.volumeInfo.imageLinks?.thumbnail || ''; 
                         img.alt = '';
 
-                        const a = document.createElement('a');
-                        a.classList.add('tituloLivro');
-                        a.textContent = livro.volumeInfo.title;
-                        a.href = "/"
+                        const button = document.createElement('button');
+                        button.classList.add('tituloLivro');
+                        button.textContent = livro.volumeInfo.title;
+                        button.type = 'submit';
+
+                        const form = document.createElement('form');
+                        form.action = "/api/comment/add"
+                        form.method = "POST"
+
+                        const input = document.createElement('input');
+                        input.setAttribute('type', 'hidden');
+                        input.setAttribute('name', 'livro');
+                        input.setAttribute('value', JSON.stringify(livro));
+
+                        form.appendChild(input)
+                        form.appendChild(button)
 
                         livroDiv.appendChild(img);
-                        livroDiv.appendChild(a);
+                        livroDiv.appendChild(form);
 
                         livrosContainer.appendChild(livroDiv);
                     });

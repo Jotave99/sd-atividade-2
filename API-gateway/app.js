@@ -26,7 +26,7 @@ app.use(session({
 }))
 
 nunjucks.configure('src/views', {
-    autoescape: true,
+    autoescape: false,
     express: app
 });
 
@@ -56,6 +56,16 @@ app.post("/search",middleware.authenticate, async (req,res)=>{
 
 let comments = [];
 
+app.post("/api/comment/add", async (req, res) => {
+  const {livro} = req.body;
+
+  const parsedData = JSON.parse(livro);
+
+  const axiosResponse = await axios.post("http://localhost:3000/addbook", {parsedData});
+
+  res.redirect(`/comments/${axiosResponse.livro.id}`);
+})
+
 app.get('/api/comments', (req, res) => {
   res.json(comments);
 });
@@ -73,13 +83,13 @@ app.post('/api/comments', (req, res) => {
   }
 });
 
-app.get('/comments', (req, res) => {
+app.get('/comments/:id', (req, res) => {
 
   const telaConfigData = fs.readFileSync("./telaConfig.json", "utf8");
 
-    const telaConfig = JSON.parse(telaConfigData);
+  const telaConfig = JSON.parse(telaConfigData);
     
-    for(comments of telaConfig.livros[0].comentarios){console.log(comments)};
+  for(comments of telaConfig.livros[0].comentarios){console.log(comments)};
   res.render('comentarios.njk', { telaConfig });
 });
 

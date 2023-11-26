@@ -2,6 +2,14 @@ import axios from "axios";
 
 const apiKey ="AIzaSyCMese8tmSxZX1RwqIAq4MpgNEzI-fHDFI";
 
+export const addbook = async (req, res) => {
+    const {livro} = req.body;
+
+    const axiosResponse = axios.post("http://localhost:4000/addbook", {livro});
+
+    res.json(axiosResponse);
+}
+
 export const search = async (req, res) => {
     try {
         const {pesquisa} = req.body;

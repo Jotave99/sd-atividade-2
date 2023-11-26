@@ -1,8 +1,17 @@
 import expres from "express";
 import Comentario from "./comentario/comentario.js";
+import Book from "./book/book.js";
 
 const app = expres();
 app.use(expres.json());
+
+app.post("/api/addbook", async (req, res) => {
+    const {livro} = req.body;
+
+    const book = await Book.create({livroId: livro.id, volumeInfo: livro.volumeInfo})
+
+    res.json(book);
+})
 
 app.post("/api/comentario",async (req,res)=>{
 
@@ -61,6 +70,6 @@ app.delete("/api/deletecomentario",async (req,res)=>{
 });
 
 
-app.listen(3000,()=>{
-    console.log("https://localhost:3000");   
+app.listen(4000,()=>{
+    console.log("https://localhost:4000");   
 });
