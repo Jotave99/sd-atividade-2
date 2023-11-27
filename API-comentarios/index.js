@@ -23,7 +23,7 @@ app.post("/api/addbook", async (req, res) => {
 app.get("/api/getlivro/:id",async (req,res)=>{
 
     const {id} = req.params;
-    console.log(id)
+
     const book = await Book.findByPk(id);
 
     res.json(book);
@@ -33,9 +33,9 @@ app.post("/api/comentario",async (req,res)=>{
     const { newComment } = req.body; 
 
     const dataAtual = new Date();
-    // const dataFormatada = `${dataAtual.getDate()}/${dataAtual.getMonth() + 1}/${dataAtual.getFullYear()}`;
+    const dataFormatada = `${dataAtual.getDate()}/${dataAtual.getMonth() + 1}/${dataAtual.getFullYear()}`;
 
-    const comentario = await Comentario.create({livroId: newComment.livroId, usuario: newComment.usuario, texto: newComment.texto, data: dataAtual});
+    const comentario = await Comentario.create({livroId: newComment.livroId, usuario: newComment.usuario, texto: newComment.texto, data: dataFormatada});
 
     res.json(comentario);
 });

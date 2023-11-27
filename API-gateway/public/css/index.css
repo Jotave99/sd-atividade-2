@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap');
+
 *{
     margin: 0;
     padding: 0;
@@ -10,7 +12,8 @@ body{
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    gap: 100px;
+    gap: 30px;
+    font-family: 'Manrope';
 }
 
 .container{
@@ -26,11 +29,6 @@ body{
 
   .right-section {
     margin-left: 50px;
-  }
-
-  .comment-section {
-    margin-top: 30px;
-    
   }
 
   textarea {
@@ -108,9 +106,54 @@ button{
     gap: 10px;
 }
 
-.boxConteudo{
+.boxImage{
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    width: 300px;
+    height: 361px;
+}
+
+.boxImage > img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#comment-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#comment-form button {
+    align-self: flex-end;
+}
+
+.comment-container {
+    display: flex;
+    justify-content: center;
+    width: 60%;
+    font-family: 'Manrope';
+}
+
+#comment-sinopse {
+    margin-bottom: 20px;
+}
+
+.comment {
+    display: flex;
+    margin: 30px 0;
+}
+
+.comment-info {
+    margin-right: 5px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.subtitle {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 20px;
 }

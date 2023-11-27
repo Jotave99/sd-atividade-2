@@ -20,7 +20,7 @@ const Comentario = database.define('Comentario', {
     allowNull: false,
   },
   data:{
-    type: DataTypes.DATE,
+    type: DataTypes.STRING,
     allowNull: false,
   }
 });

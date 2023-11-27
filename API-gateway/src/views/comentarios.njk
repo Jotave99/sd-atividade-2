@@ -3,16 +3,15 @@
 {% set title = "BooksAPI" %}
 
 {% block content %}
-
-    <div class="container">
+    <h1>{{ livro.volumeInfo.title }}</h1>
+    <div class="comment-container">
         <div class="left-section">
-            <a href="/search">voltar a busca</a>
+            <a href="/search">&lt voltar a busca</a>
 
             {% if livro %}
                 <div class="boxLivros">
-                    <div class="boxConteudo">
-                        <img src="{{ livro.volumeInfo.imageLinks.thumbnail }}" alt="">
-                        <p class="tituloLivro">{{ livro.volumeInfo.title }}</p>
+                    <div class="boxImage">
+                        <img src="{{ livro.volumeInfo.imageLinks.thumbnail }}" alt="Capa do livro">
                     </div>
                 </div>
             {% else %}
@@ -21,26 +20,32 @@
 
         </div>
         <div class="right-section">
-            <p>
-                Sinopse do Livro:<br/> 
-                {{livro.volumeInfo.description}}
-            </p>
+            <div id="comment-sinopse">
+                <span class="subtitle">SINOPSE</span>
+                <p> 
+                    {{livro.volumeInfo.description}}
+                </p>
+            </div>
+
+            
+            <span class="subtitle">COMENTÁRIOS</span>
             <div class="comment-section">
                 <form action="/api/addcomment" method="POST" id="comment-form">
-                    <label for="text">Comentário:</label>
                     <textarea id="text" name="comment" required></textarea>
                     <input type="hidden" name="livroid" value={{ livro.livroId }}/>
                     <button type="submit">Comentar</button>
                 </form>
             </div>
-        </div>
 
-        <div id="comments-container">
-            {% for comment in comments %}
-                <div class="comment">
-                    <p>{{ comment.texto}}</p>
-                </div>
-            {% endfor %}
+            <div id="comments-container">
+                {% for comment in comments %}
+                    <div class="comment">
+                        <span class="comment-info">{{comment.data}}.</span>
+                        <span class="comment-info">{{comment.usuario.name}}.</span>
+                        <p>{{ comment.texto}}</p>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 {% endblock %}
