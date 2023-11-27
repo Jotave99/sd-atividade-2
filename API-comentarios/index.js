@@ -1,6 +1,7 @@
 import express from "express";
 import Comentario from "./comentario/comentario.js";
 import Book from "./book/book.js";
+import { where } from "sequelize";
 
 const app = express();
 app.use(express.json());
@@ -8,7 +9,7 @@ app.use(express.json());
 app.post("/api/addbook", async (req, res) => {
     const {parsedData} = req.body;
 
-    const search = await Book.findOne({livroId: parsedData.id});
+    const search = await Book.findByPk(parsedData.id);
 
     if(!search){
         const book = await Book.create({livroId: parsedData.id, volumeInfo: parsedData.volumeInfo})
@@ -17,20 +18,18 @@ app.post("/api/addbook", async (req, res) => {
     } else {
         res.json(search);
     }
-    //res.json(book);
 })
 
 app.get("/api/getlivro/:id",async (req,res)=>{
 
     const {id} = req.params;
+    console.log(id)
+    const book = await Book.findByPk(id);
 
-    const book = await Book.findOne({livroId: id});
-      
     res.json(book);
 });
 
 app.post("/api/comentario",async (req,res)=>{
-    console.log(req.body.newComment);
     const { newComment } = req.body; 
 
     const dataAtual = new Date();
@@ -45,7 +44,7 @@ app.get("/api/getcomments/:id",async (req,res)=>{
 
     const {id} = req.params;
 
-    const comments = await Comentario.findAll({livroId: id});
+    const comments = await Comentario.findAll({where: {livroId: id}});
       
     res.json(comments);
 });

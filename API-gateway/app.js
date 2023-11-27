@@ -50,26 +50,26 @@ app.post("/search",middleware.authenticate, async (req,res)=>{
 
 app.post("/api/addcomment", async (req, res) => {
   const {comment, livroid} = req.body;
-
+  const newId = livroid.replace('/', '');
   const user = req.session.user;
 
   const newComment = {  
-    livroId: livroid,
+    livroId: newId,
     usuario: user,
     texto: comment,
   }
 
-  const axiosResponse = await axios.post("http://localhost:3000/api/addcomment", {newComment});
+  const axiosResponse = await axios.post("http://localhost:4000/api/comentario", {newComment});
 
-  res.redirect(`/comments/${livroid}`);
+  res.redirect(`/comments/${newId}`);
 })
 
 app.get('/comments/:id', middleware.authenticate, async (req, res) => {
   const {id} = req.params;
 
-  const book = await axios.get(`http://localhost:3000/api/buscalivro/:${id}`);
+  const book = await axios.get(`http://localhost:3000/api/buscalivro/${id}`);
 
-  const comments = await axios.get(`http://localhost:3000/api/getcomments/:${id}`);
+  const comments = await axios.get(`http://localhost:4000/api/getcomments/${id}`);
 
   res.render('comentarios.njk', { livro: book.data, comments:  comments.data});
 });

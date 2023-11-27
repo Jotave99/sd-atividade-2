@@ -6,7 +6,7 @@
 
     <div class="container">
         <div class="left-section">
-            <a href="/">voltar a busca</a>
+            <a href="/search">voltar a busca</a>
 
             {% if livro %}
                 <div class="boxLivros">
@@ -42,32 +42,5 @@
                 </div>
             {% endfor %}
         </div>
-
-        {# <script>
-            function addComment() {
-                var authorInput = document.getElementById('author');
-                var textInput = document.getElementById('text');
-
-                var author = authorInput.value;
-                var text = textInput.value;
-
-                if (author && text) {
-                    var commentContainer = document.getElementById('comments-container');
-
-                    // Adicione o novo comentário à lista
-                    var newComment = document.createElement('div');
-                    newComment.className = 'comment';
-                    newComment.innerHTML = '<p>' + author + ' diz: ' + text + '</p>';
-
-                    commentContainer.appendChild(newComment);
-
-                    // Limpe os campos do formulário
-                    authorInput.value = '';
-                    textInput.value = '';
-                } else {
-                    alert('Por favor, preencha todos os campos.');
-                }
-            }
-        </script> #}
     </div>
 {% endblock %}

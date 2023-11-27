@@ -26,7 +26,7 @@ export const getLivro = async (req, res)=>{
     try {
         const { id } = req.params;
 
-        const response = await axios.get(`http://localhost:4000/api/getlivro/:${id}`);
+        const response = await axios.get(`http://localhost:4000/api/getlivro/${id}`);
 
         res.json(response.data);
     } catch (err) {
