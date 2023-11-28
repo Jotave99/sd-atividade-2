@@ -16,5 +16,16 @@ Para rodar o projeto é necessário o uso de um container docker criado com a im
 ### API-books
 ```
 JWT_SECRET = "qualquercoisa"
-````
+```
 
+### API-comentarios
+
+```
+PG_URI="postgres://seu_usuario:senha@seu_host:porta/seu_banco"
+```
+### 
+API-gateway
+
+```
+SECRET = "qualquercoisa"
+```
