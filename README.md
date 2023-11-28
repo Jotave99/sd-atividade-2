@@ -13,6 +13,8 @@ Para rodar o projeto é necessário o uso de um container docker criado com a im
 
 ## Variaveis de ambiente dotenv
 
+#### crie um arquivo .env na raiz de cada uma das api e coloque nelas as informações ditas abaixo 
+
 ### API-books
 ```
 JWT_SECRET = "qualquercoisa"
@@ -23,8 +25,7 @@ JWT_SECRET = "qualquercoisa"
 ```
 PG_URI="postgres://seu_usuario:senha@seu_host:porta/seu_banco"
 ```
-### 
-API-gateway
+### API-gateway
 
 ```
 SECRET = "qualquercoisa"
